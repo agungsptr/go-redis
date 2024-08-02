@@ -1,0 +1,4 @@
+.env
+
+# Golang build output file
+main
