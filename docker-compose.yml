@@ -19,7 +19,7 @@ services:
 
   redis:
     container_name: go-redis_redis
-    image: redis:7.2.3
+    image: agungsptr/go-redis_redis:7.2.3
     restart: always
     env_file:
       - .env

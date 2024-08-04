@@ -4,9 +4,23 @@ CONTAINER := go-redis
 COMPOSE := docker compose -f docker-compose.yml
 
 
+# Redis
+build-redis:
+	@cp .env build/redis/.env
+	docker build -f build/redis/Dockerfile -t $(IMAGE)_redis:7.2.3 build/redis
+	@rm build/redis/.env
+
+run-redis:
+	@$(COMPOSE) up -d --force-recreate redis
+
+stop-redis:
+	@docker container stop $(CONTAINER)_redis || true
+	@docker container rm $(CONTAINER)_redis || true
+
+
 # CRUD Server
 build-server:
-	docker build -t $(IMAGE)_server:$(TAG) .
+	docker build -f build/app/Dockerfile -t $(IMAGE)_server:$(TAG) .
 
 run-server:
 	@$(COMPOSE) up -d --force-recreate server
@@ -19,17 +33,19 @@ stop-server:
 # All services (Redis, Server)
 build:
 	@make -s build-server
+	@make -s build-redis
 
-run-services:
+run:
 	@$(COMPOSE) down -v || true
 	@$(COMPOSE) up -d --force-recreate
 
-stop-services:
+stop:
 	@$(COMPOSE) down -v || true
 
-purge-services:
-	@make -s stop-services
+purge:
+	@make -s stop
 	@docker image rm $(IMAGE)_server:$(TAG) || true
+	@docker image rm $(IMAGE)_redis:7.2.3|| true
 
 
 # Others
