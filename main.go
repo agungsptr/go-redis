@@ -5,14 +5,14 @@ import (
 	"time"
 
 	"github.com/agungsptr/go-redis/common"
-	"github.com/agungsptr/go-redis/db"
+	"github.com/agungsptr/go-redis/db/mongo"
 	"github.com/agungsptr/go-redis/models"
 	"github.com/agungsptr/go-redis/usecase/book"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
 func main() {
-	db := db.MongoClient()
+	db := mongo.MongoClient()
 
 	data := models.Book{
 		Title:  "Outlier",
