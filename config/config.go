@@ -13,7 +13,6 @@ type configurations struct {
 	RedisPort string `env:"REDIS_PORT"`
 	RedisUser string `env:"REDIS_USER"`
 	RedisPass string `env:"REDIS_PASS"`
-	RedisUri  string `env:"omitempty"`
 	MongoUser string `env:"MONGO_USER"`
 	MongoPass string `env:"MONGO_PASS"`
 	MongoPort string `env:"MONGO_PORT"`
@@ -36,13 +35,6 @@ func loadEnv() {
 		cfg.MongoPass,
 		cfg.MongoHost,
 		cfg.MongoPort,
-	)
-
-	cfg.RedisUri = fmt.Sprintf("redis://%s:%s@%s:%s",
-		cfg.RedisUser,
-		cfg.RedisPass,
-		cfg.RedisHost,
-		cfg.RedisPort,
 	)
 }
 

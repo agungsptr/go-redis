@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 )
 
-func JsonMarshal(data any) []byte {
+func JsonPrettyPrint(data any) []byte {
 	jsonData, err := json.MarshalIndent(data, "", "   ")
 	if err != nil {
 		panic(err)

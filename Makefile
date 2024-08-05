@@ -35,6 +35,12 @@ build:
 	@make -s build-server
 	@make -s build-redis
 
+infra:
+	@$(COMPOSE) down -v || true
+	@make -s purge
+	@make -s build-redis
+	@$(COMPOSE) up -d --force-recreate mongo redis
+
 run:
 	@$(COMPOSE) down -v || true
 	@$(COMPOSE) up -d --force-recreate
